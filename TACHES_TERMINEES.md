@@ -102,6 +102,7 @@
 - **Structure du projet** : Backend/Frontend séparés
 - **Base de données** : 3 tables principales (produits, lots, parametres)
 - **Alertes** : 4 niveaux configurables (1j, 7j, 30j, 60j)
+- **Hébergement** : cPanel (déploiement sur hébergement partagé)
 
 ### Points d'attention :
 - Le projet est **indépendant du système d'inventaire**
@@ -109,9 +110,10 @@
 - **Alertes visuelles** sont cruciales pour l'UX
 
 ### Technologies à considérer :
-- **Backend** : Node.js/Express, Python/Django, ou PHP/Laravel
-- **Frontend** : React, Vue.js, ou vanilla JS + Tailwind
-- **Base de données** : MySQL, PostgreSQL, ou SQLite
+- **Backend** : PHP (recommandé pour cPanel) ou Node.js si supporté
+- **Frontend** : Vanilla JS + HTML/CSS ou frameworks légers
+- **Base de données** : MySQL (parfait pour cPanel)
+- **Déploiement** : cPanel avec FileManager ou FTP
 
 ---
 

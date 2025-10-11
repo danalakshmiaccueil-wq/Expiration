@@ -39,81 +39,79 @@ Application de gestion des dates de péremption des produits alimentaires avec s
 
 ---
 
-## ⚙️ Phase 3 : Développement Backend
+## ⚙️ Phase 3 : Développement Backend (PHP pour cPanel)
 
-### 3.1 Configuration de l'API
-- [ ] Choisir la technologie (Node.js/Express, Python/Django, PHP/Laravel)
-- [ ] Configurer l'environnement de développement
-- [ ] Installer les dépendances
-- [ ] Configurer la connexion à la base de données
+### 3.1 Configuration de l'API PHP
+- [ ] Structurer l'API PHP pour cPanel (dossier `api/`)
+- [ ] Configurer la connexion MySQL via cPanel
+- [ ] Mettre en place l'autoloading et la structure MVC légère
+- [ ] Configurer la gestion des erreurs et logs
 
 ### 3.2 Endpoints CRUD - Produits
-- [ ] GET /api/produits (liste tous les produits)
-- [ ] GET /api/produits/:id (détail d'un produit)
-- [ ] POST /api/produits (créer un produit)
-- [ ] PUT /api/produits/:id (modifier un produit)
-- [ ] DELETE /api/produits/:id (supprimer un produit)
+- [ ] GET /api/produits.php (liste tous les produits)
+- [ ] GET /api/produits.php?id=X (détail d'un produit)
+- [ ] POST /api/produits.php (créer un produit)
+- [ ] PUT /api/produits.php (modifier un produit)
+- [ ] DELETE /api/produits.php (supprimer un produit)
 
 ### 3.3 Endpoints CRUD - Lots
-- [ ] GET /api/lots (liste tous les lots avec filtres)
-- [ ] GET /api/lots/:id (détail d'un lot)
-- [ ] POST /api/lots (créer un lot)
-- [ ] PUT /api/lots/:id (modifier un lot)
-- [ ] PATCH /api/lots/:id/marquer-solde (marquer comme soldé)
-- [ ] DELETE /api/lots/:id (supprimer un lot)
+- [ ] GET /api/lots.php (liste tous les lots avec filtres)
+- [ ] GET /api/lots.php?id=X (détail d'un lot)
+- [ ] POST /api/lots.php (créer un lot)
+- [ ] PUT /api/lots.php (modifier un lot)
+- [ ] PATCH /api/lots.php (marquer comme soldé)
+- [ ] DELETE /api/lots.php (supprimer un lot)
 
-### 3.4 Endpoints spécialisés
-- [ ] GET /api/alertes (lots arrivant à expiration selon paramètres)
-- [ ] GET /api/dashboard/metriques (statistiques globales)
-- [ ] GET /api/dashboard/alertes-par-periode (répartition des alertes)
-- [ ] GET /api/parametres (récupérer les paramètres d'alerte)
-- [ ] PUT /api/parametres (modifier les paramètres d'alerte)
+### 3.4 Endpoints spécialisés (PHP)
+- [ ] GET /api/alertes.php (lots arrivant à expiration)
+- [ ] GET /api/dashboard.php (métriques globales)
+- [ ] GET /api/statistiques.php (statistiques détaillées)
+- [ ] GET /api/parametres.php (récupérer les paramètres)
+- [ ] PUT /api/parametres.php (modifier les paramètres)
 
-### 3.5 Système d'alertes
-- [ ] Implémenter la logique de calcul des alertes
-- [ ] Créer les filtres par date (J+1, J+7, J+30, J+60)
-- [ ] Implémenter la catégorisation par urgence
-- [ ] Ajouter la validation des données
+### 3.5 Système d'alertes PHP
+- [ ] Classe AlerteManager pour calcul des alertes
+- [ ] Intégration avec les procédures stockées MySQL
+- [ ] Gestion des couleurs et niveaux d'urgence
+- [ ] Cache des alertes pour optimiser les performances
 
 ---
 
-## 🎨 Phase 4 : Développement Frontend
+## 🎨 Phase 4 : Développement Frontend (Optimisé cPanel)
 
 ### 4.1 Configuration du projet frontend
-- [ ] Choisir la technologie (React, Vue.js, ou vanilla JS)
-- [ ] Installer et configurer les outils (Vite, Webpack)
-- [ ] Configurer Tailwind CSS ou autre framework CSS
-- [ ] Structurer les dossiers (components, pages, services, utils)
+- [ ] Structure HTML/CSS/JS pour hébergement partagé
+- [ ] Choisir framework CSS léger (Tailwind via CDN ou CSS pur)
+- [ ] Configurer la structure des fichiers pour `public_html/`
+- [ ] Optimiser les ressources pour performance web
 
-### 4.2 Pages principales
-- [ ] Page d'accueil / Dashboard
-- [ ] Page de liste des produits
-- [ ] Page d'ajout/modification de produit
-- [ ] Page de liste des lots
-- [ ] Page d'ajout de lot (réception marchandise)
-- [ ] Page des alertes
-- [ ] Page des paramètres
+### 4.2 Pages principales (HTML/PHP hybride)
+- [ ] index.php - Dashboard principal
+- [ ] produits.php - Liste et gestion des produits
+- [ ] lots.php - Gestion des lots et réception
+- [ ] alertes.php - Vue des alertes prioritaires
+- [ ] parametres.php - Configuration du système
+- [ ] statistiques.php - Rapports et analyses
 
-### 4.3 Composants réutilisables
-- [ ] Composant TableauProduits
-- [ ] Composant TableauLots
-- [ ] Composant FiltresDate
-- [ ] Composant AlerteVisuelle
-- [ ] Composant FormulaireProduit
-- [ ] Composant FormulaireLot
-- [ ] Composant Statistiques
+### 4.3 Composants JavaScript modulaires
+- [ ] Module TableauProduits (gestion CRUD)
+- [ ] Module TableauLots (gestion stock)
+- [ ] Module FiltresDate (recherche avancée)
+- [ ] Module AlerteVisuelle (notifications)
+- [ ] Module Dashboard (métriques temps réel)
+- [ ] Module FormulaireSaisie (ajout produits/lots)
 
-### 4.4 Système d'alertes visuelles
-- [ ] Codes couleurs pour les niveaux d'urgence
-- [ ] Badges d'alerte sur les lots
-- [ ] Notifications dans l'interface
-- [ ] Compteurs d'alertes en temps réel
+### 4.4 Système d'alertes frontend
+- [ ] Affichage couleurs selon urgence
+- [ ] Notifications browser natives
+- [ ] Badges de comptage en temps réel
+- [ ] Sons d'alerte configurables
 
-### 4.5 Tableau de bord
-- [ ] Métriques globales (total produits, lots, alertes)
-- [ ] Graphiques de répartition des alertes
-- [ ] Liste des prochaines expirations
-- [ ] Filtres dynamiques par date/catégorie
+### 4.5 Interface responsive (mobile-first)
+- [ ] Design adaptatif pour tablettes/mobiles
+- [ ] Interface tactile optimisée
+- [ ] PWA (Progressive Web App) pour utilisation offline
+- [ ] Optimisation vitesse de chargement
 
 ---
 
@@ -162,25 +160,31 @@ Application de gestion des dates de péremption des produits alimentaires avec s
 
 ---
 
-## 🚀 Phase 7 : Déploiement et maintenance
+## 🚀 Phase 7 : Déploiement cPanel et maintenance
 
-### 7.1 Préparation au déploiement
-- [ ] Configuration de production
-- [ ] Optimisation des performances
-- [ ] Sécurisation de l'API
-- [ ] Documentation technique
+### 7.1 Préparation au déploiement cPanel
+- [ ] Configuration des variables d'environnement PHP
+- [ ] Optimisation pour hébergement partagé
+- [ ] Compression et minification des assets
+- [ ] Configuration des permissions de fichiers
 
-### 7.2 Déploiement
-- [ ] Choisir l'hébergement (Vercel, Netlify, Heroku, VPS)
-- [ ] Configurer le serveur de production
-- [ ] Déployer la base de données
-- [ ] Déployer l'application
+### 7.2 Déploiement sur cPanel
+- [ ] Upload via FileManager ou FTP
+- [ ] Configuration de la base de données MySQL
+- [ ] Test des connexions et permissions
+- [ ] Configuration des domaines/sous-domaines
 
-### 7.3 Maintenance
+### 7.3 Optimisation cPanel
+- [ ] Configuration du cache PHP
+- [ ] Optimisation des requêtes MySQL
+- [ ] Configuration des sauvegardes automatiques
 - [ ] Monitoring des performances
-- [ ] Sauvegarde automatique des données
-- [ ] Mise à jour de sécurité
-- [ ] Support utilisateur
+
+### 7.4 Maintenance sur cPanel
+- [ ] Scripts de sauvegarde automatique
+- [ ] Monitoring des logs d'erreur
+- [ ] Mise à jour de sécurité PHP/MySQL
+- [ ] Surveillance de l'espace disque
 
 ---
 
@@ -200,14 +204,23 @@ Application de gestion des dates de péremption des produits alimentaires avec s
 
 ---
 
-## 🎯 Priorités de développement recommandées
+## 🎯 Priorités de développement pour cPanel
 
-1. **Urgent** : Phase 1 et 2 (configuration et base de données)
-2. **Haute** : Phase 3.1-3.3 (API de base)
-3. **Haute** : Phase 4.1-4.2 (interface de base)
-4. **Moyenne** : Système d'alertes complet
-5. **Moyenne** : Tableau de bord avancé
-6. **Basse** : Fonctionnalités d'export et tests avancés
+1. **Urgent** : Phase 1 ✅ et 2 ✅ (terminées)
+2. **Haute** : Phase 3 - API PHP/MySQL (backend stable)
+3. **Haute** : Phase 4 - Frontend HTML/CSS/JS (interface utilisateur)
+4. **Moyenne** : Optimisation et tests complets
+5. **Moyenne** : Déploiement et configuration cPanel
+6. **Basse** : Fonctionnalités avancées et PWA
+
+---
+
+**Stack technique final pour cPanel :**
+- **Backend** : PHP 8+ avec MySQLi/PDO
+- **Frontend** : HTML5 + CSS3 + Vanilla JavaScript
+- **Base de données** : MySQL (déjà conçue et prête)
+- **Hébergement** : cPanel avec support PHP/MySQL
+- **Déploiement** : FTP/FileManager vers `public_html/`
 
 ---
 
