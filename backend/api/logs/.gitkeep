@@ -1,0 +1,9 @@
+# Ce fichier maintient le dossier logs/ dans Git
+# Les fichiers de logs sont générés dynamiquement par l'application
+# 
+# Structure des logs:
+# - error_YYYY-MM-DD.log : Erreurs système
+# - user_actions_YYYY-MM-DD.log : Actions utilisateur 
+# - debug_YYYY-MM-DD.log : Logs de debug (développement)
+#
+# Permissions recommandées: 755 pour le dossier, 644 pour les fichiers

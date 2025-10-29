@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produits Datés - Danalakshmi</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/danalakshmi-theme.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        
+        /* NOUVEAU HEADER MODERNE */
+        .modern-navbar {
+            background: #ffffff;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+            padding: 1rem 0;
+            border-bottom: 3px solid #4a934a;
+        }
+        
+        .modern-navbar .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #2c3e50 !important;
+        }
+        
+        .modern-navbar .navbar-brand span {
+            background: linear-gradient(135deg, #4a934a 0%, #6cb56c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .modern-navbar .nav-link {
+            color: #2c3e50;
+            font-weight: 500;
+            padding: 0.5rem 1.2rem;
+            margin: 0 0.2rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .modern-navbar .nav-link:hover {
+            background: rgba(74, 147, 74, 0.1);
+            color: #4a934a;
+            transform: translateY(-2px);
+        }
+        
+        .modern-navbar .nav-link.active {
+            background: linear-gradient(135deg, #4a934a 0%, #6cb56c 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(74, 147, 74, 0.3);
+        }
+        
+        .modern-navbar .nav-link i {
+            margin-right: 0.5rem;
+        }
+        
+        .logo {
+            width: 50px;
+            height: 50px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+        }
+        
+        .main-container {
+            margin-top: 20px;
+        }
+        
+        .lot-card {
+            transition: transform 0.2s;
+        }
+        
+        .lot-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .expired {
+            border-left: 4px solid #dc3545;
+        }
+        
+        .expiring-soon {
+            border-left: 4px solid #ffc107;
+        }
+        
+        .fresh {
+            border-left: 4px solid #198754;
+        }
+        
+        .sold {
+            opacity: 0.6;
+            border-left: 4px solid #6c757d;
+        }
+        
+        .filter-buttons .btn {
+            margin: 2px;
+        }
+        
+        .search-container {
+            position: relative;
+        }
+        
+        .stats-card {
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Moderne -->
+    <nav class="navbar navbar-expand-lg modern-navbar">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <img src="logo danalakshmi.png" class="logo me-3" alt="Danalakshmi Logo">
+                <span>Danalakshmi Store</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">
+                            <i class="fas fa-home"></i>Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="add-date.html">
+                            <i class="fas fa-plus-circle"></i>Ajouter Date
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="produits-dates.html">
+                            <i class="fas fa-calendar-check"></i>Voir Dates
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="gestion-produits.html">
+                            <i class="fas fa-box-open"></i>Produits
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container main-container">
+        <div class="row">
+            <div class="col-12">
+                <div class="bg-white rounded border p-4 mb-4">
+                    <h3 class="text-center mb-4">
+                        <i class="fas fa-calendar-check text-primary"></i> Produits avec Dates d'Expiration
+                    </h3>
+                    
+                    <!-- Statistiques -->
+                    <div class="row mb-4">
+                        <div class="col-md-3">
+                            <div class="stats-card rounded p-3 text-center">
+                                <h4 class="mb-1" id="total-lots">-</h4>
+                                <small>Total Lots</small>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="bg-success rounded p-3 text-center text-white">
+                                <h4 class="mb-1" id="fresh-lots">-</h4>
+                                <small>Frais</small>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="bg-warning rounded p-3 text-center text-white">
+                                <h4 class="mb-1" id="expiring-lots">-</h4>
+                                <small>Expire Bientôt</small>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="bg-danger rounded p-3 text-center text-white">
+                                <h4 class="mb-1" id="expired-lots">-</h4>
+                                <small>Expirés</small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Filtres et recherche -->
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="search-container">
+                                <input type="text" id="search-input" class="form-control" placeholder="Rechercher un produit...">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="filter-buttons">
+                                <button class="btn btn-outline-primary active" onclick="filterLots('all')">Tous</button>
+                                <button class="btn btn-outline-success" onclick="filterLots('fresh')">Frais</button>
+                                <button class="btn btn-outline-warning" onclick="filterLots('expiring')">Expire Bientôt</button>
+                                <button class="btn btn-outline-danger" onclick="filterLots('expired')">Expirés</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Messages -->
+                    <div id="messages"></div>
+                    
+                    <!-- Loading -->
+                    <div id="loading" class="text-center py-4">
+                        <i class="fas fa-spinner fa-spin fa-2x"></i>
+                        <p>Chargement des produits...</p>
+                    </div>
+                    
+                    <!-- Liste des lots -->
+                    <div id="lots-container" class="row" style="display: none;">
+                        <!-- Les lots seront chargés ici -->
+                    </div>
+                    
+                    <!-- Pas de résultats -->
+                    <div id="no-results" style="display: none;" class="text-center py-4">
+                        <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
+                        <h5 class="text-muted">Aucun produit trouvé</h5>
+                        <p class="text-muted">Il n'y a pas de produits avec des dates d'expiration correspondant à vos critères.</p>
+                    </div>
+                    
+                    <!-- Navigation -->
+                    <div class="text-center mt-4">
+                        <a href="add-date.html" class="btn btn-primary me-2">
+                            <i class="fas fa-plus"></i> Ajouter une Date
+                        </a>
+                        <a href="archives.html" class="btn btn-outline-secondary">
+                            <i class="fas fa-archive"></i> Voir les Archives
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        const API_BASE = 'api/';
+        let allLots = [];
+        let filteredLots = [];
+        let currentFilter = 'all';
+        
+        // Charger tous les lots au démarrage
+        document.addEventListener('DOMContentLoaded', function() {
+            // Vérifier s'il y a un filtre dans l'URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const filterFromUrl = urlParams.get('filter');
+            
+            if (filterFromUrl) {
+                currentFilter = filterFromUrl;
+                // Activer le bon bouton de filtre
+                document.querySelectorAll('.filter-buttons .btn').forEach(btn => {
+                    btn.classList.remove('active');
+                    if (btn.onclick.toString().includes(`'${filterFromUrl}'`)) {
+                        btn.classList.add('active');
+                    }
+                });
+            }
+            
+            loadAllLots();
+            
+            // Recherche en temps réel
+            document.getElementById('search-input').addEventListener('keyup', function() {
+                filterAndDisplayLots();
+            });
+        });
+        
+        // Fonction pour charger tous les lots
+        function loadAllLots() {
+            fetch(`${API_BASE}lots.php`)
+                .then(response => response.json())
+                .then(data => {
+                    // L'API retourne {success: true, data: [...]}
+                    const allLotsFromApi = data.success ? data.data : [];
+                    // Exclure les lots soldés de cette page
+                    allLots = allLotsFromApi.filter(lot => !lot.date_solde);
+                    calculateStats();
+                    filterAndDisplayLots();
+                    document.getElementById('loading').style.display = 'none';
+                    document.getElementById('lots-container').style.display = 'block';
+                })
+                .catch(error => {
+                    console.error('Erreur lors du chargement:', error);
+                    showMessage('Erreur lors du chargement des produits', 'danger');
+                    document.getElementById('loading').style.display = 'none';
+                });
+        }
+        
+        // Fonction pour calculer les statistiques
+        function calculateStats() {
+            const now = new Date();
+            const total = allLots.length;
+            const expired = allLots.filter(lot => new Date(lot.date_expiration) < now && !lot.date_solde).length;
+            const expiringSoon = allLots.filter(lot => {
+                const expDate = new Date(lot.date_expiration);
+                const diffDays = Math.ceil((expDate - now) / (1000 * 60 * 60 * 24));
+                return diffDays > 0 && diffDays <= 30 && !lot.date_solde;
+            }).length;
+            const fresh = allLots.filter(lot => {
+                const expDate = new Date(lot.date_expiration);
+                const diffDays = Math.ceil((expDate - now) / (1000 * 60 * 60 * 24));
+                return diffDays > 30 && !lot.date_solde;
+            }).length;
+            
+            document.getElementById('total-lots').textContent = total;
+            document.getElementById('fresh-lots').textContent = fresh;
+            document.getElementById('expiring-lots').textContent = expiringSoon;
+            document.getElementById('expired-lots').textContent = expired;
+        }
+        
+        // Fonction pour filtrer les lots
+        function filterLots(filter) {
+            currentFilter = filter;
+            
+            // Mettre à jour les boutons actifs
+            document.querySelectorAll('.filter-buttons .btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            filterAndDisplayLots();
+        }
+        
+        // Fonction pour filtrer et afficher les lots
+        function filterAndDisplayLots() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            const now = new Date();
+            
+            filteredLots = allLots.filter(lot => {
+                // Filtre par recherche
+                const matchesSearch = !searchTerm || 
+                    lot.produit_nom.toLowerCase().includes(searchTerm) ||
+                    lot.produit_reference.toLowerCase().includes(searchTerm);
+                
+                if (!matchesSearch) return false;
+                
+                // Filtre par catégorie d'expiration
+                const expDate = new Date(lot.date_expiration);
+                const diffDays = Math.ceil((expDate - now) / (1000 * 60 * 60 * 24));
+                
+                switch(currentFilter) {
+                    case 'expired':
+                        return diffDays < 0;
+                    case 'critical':
+                        return diffDays >= 0 && diffDays < 7;
+                    case 'warning':
+                        return diffDays >= 7 && diffDays < 14;
+                    case 'attention':
+                        return diffDays >= 14 && diffDays < 30;
+                    case 'good':
+                        return diffDays >= 30 && diffDays < 90;
+                    case 'fresh':
+                        return diffDays > 90;
+                    case 'expiring':
+                        return diffDays > 0 && diffDays <= 30;
+                    case 'all':
+                    default:
+                        return true;
+                }
+            });
+            
+            displayLots();
+        }
+        
+        // Fonction pour afficher les lots
+        function displayLots() {
+            const container = document.getElementById('lots-container');
+            const noResults = document.getElementById('no-results');
+            
+            if (filteredLots.length === 0) {
+                container.style.display = 'none';
+                noResults.style.display = 'block';
+                return;
+            }
+            
+            container.style.display = 'block';
+            noResults.style.display = 'none';
+            
+            const now = new Date();
+            const lotsHTML = filteredLots.map(lot => {
+                const expDate = new Date(lot.date_expiration);
+                const diffDays = Math.ceil((expDate - now) / (1000 * 60 * 60 * 24));
+                
+                let statusClass = 'fresh';
+                let statusIcon = 'check-circle';
+                let statusText = 'Frais';
+                let statusColor = 'success';
+                
+                // Couleur de la date d'expiration selon l'urgence
+                let expDateColor = 'success'; // Vert par défaut (plus de 3 mois)
+                let expDateBg = 'success';
+                
+                if (lot.date_solde) {
+                    statusClass = 'sold';
+                    statusIcon = 'tag';
+                    statusText = 'SOLDÉ';
+                    statusColor = 'secondary';
+                    expDateColor = 'secondary';
+                    expDateBg = 'secondary';
+                } else if (expDate < now) {
+                    statusClass = 'expired';
+                    statusIcon = 'exclamation-triangle';
+                    statusText = 'Expiré';
+                    statusColor = 'danger';
+                    expDateColor = 'danger';
+                    expDateBg = 'danger';
+                } else if (diffDays <= 7) {
+                    // Moins d'1 semaine = ROUGE
+                    statusClass = 'expiring-soon';
+                    statusIcon = 'exclamation-circle';
+                    statusText = 'Urgent';
+                    statusColor = 'danger';
+                    expDateColor = 'danger';
+                    expDateBg = 'danger';
+                } else if (diffDays <= 90) {
+                    // Moins de 3 mois = ORANGE
+                    statusClass = 'expiring-soon';
+                    statusIcon = 'exclamation-circle';
+                    statusText = 'Attention';
+                    statusColor = 'warning';
+                    expDateColor = 'warning';
+                    expDateBg = 'warning';
+                }
+                
+                // Extraire le type d'unité du lieu_stockage
+                let unitType = 'unités';
+                if (lot.lieu_stockage) {
+                    if (lot.lieu_stockage.includes('palette')) unitType = 'palettes';
+                    else if (lot.lieu_stockage.includes('carton')) unitType = 'cartons';
+                    else if (lot.lieu_stockage.includes('pack')) unitType = 'packs';
+                }
+                
+                // Extraire le nom du lot sans le type d'unité entre parenthèses
+                let lotName = lot.lieu_stockage || 'Non spécifié';
+                if (lotName && lotName !== 'Non spécifié') {
+                    lotName = lotName.replace(/\s*\((palette|carton|pack|lot|unité)\)\s*/gi, '').trim();
+                    if (!lotName) lotName = 'Non spécifié';
+                }
+                
+                return `
+                    <div class="col-md-6 mb-3">
+                        <div class="card lot-card ${statusClass} h-100">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start mb-3">
+                                    <h6 class="card-title mb-0">${lot.produit_nom}</h6>
+                                    <span class="badge bg-${statusColor}">
+                                        <i class="fas fa-${statusIcon}"></i> ${statusText}
+                                    </span>
+                                </div>
+                                
+                                <!-- DATE D'EXPIRATION GRANDE ET COLORÉE -->
+                                <div class="mb-3">
+                                    <div class="p-3 rounded" style="background-color: rgba(var(--bs-${expDateBg}-rgb), 0.1); border-left: 4px solid var(--bs-${expDateBg});">
+                                        <small class="text-muted d-block mb-1">Date d'expiration</small>
+                                        <h5 class="mb-0 text-${expDateColor}">
+                                            <i class="fas fa-calendar-alt"></i> 
+                                            <strong>${new Date(lot.date_expiration).toLocaleDateString('fr-FR')}</strong>
+                                        </h5>
+                                    </div>
+                                </div>
+                                
+                                <div class="row text-sm mb-2">
+                                    <div class="col-6">
+                                        <small class="text-muted">Quantité:</small><br>
+                                        <strong>${lot.quantite_actuelle}/${lot.quantite_initiale} ${unitType}</strong>
+                                    </div>
+                                    <div class="col-6">
+                                        <small class="text-muted">Lot:</small><br>
+                                        <strong>${lotName}</strong>
+                                    </div>
+                                </div>
+                                
+                                <div class="row text-sm">
+                                    <div class="col-12">
+                                        <small class="text-muted">Date d'ajout:</small><br>
+                                        <strong class="text-dark">
+                                            <i class="fas fa-calendar-plus"></i> 
+                                            ${lot.date_fabrication ? new Date(lot.date_fabrication).toLocaleDateString('fr-FR') : 'Non renseignée'}
+                                        </strong>
+                                    </div>
+                                </div>
+                                
+                                <div class="mt-3">
+                                    ${!lot.date_solde ? `
+                                        <button class="btn btn-sm btn-warning me-2" onclick="markAsSold(${lot.id})">
+                                            <i class="fas fa-tag"></i> Marquer SOLDÉ
+                                        </button>
+                                    ` : `
+                                        <small class="text-muted">
+                                            <i class="fas fa-calendar"></i> Soldé le ${new Date(lot.date_solde).toLocaleDateString('fr-FR')}
+                                        </small>
+                                    `}
+                                    <button class="btn btn-sm btn-outline-danger float-end" onclick="deleteLot(${lot.id})">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            container.innerHTML = lotsHTML;
+        }
+        
+        // Fonction pour marquer un lot comme soldé
+        function markAsSold(lotId) {
+            if (!confirm('Marquer ce lot comme SOLDÉ ?')) {
+                return;
+            }
+            
+            const data = {
+                id: lotId,
+                action: 'mark_sold'
+            };
+            
+            fetch(`${API_BASE}lots.php`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showMessage('Lot marqué comme SOLDÉ', 'success');
+                    loadAllLots(); // Recharger pour mettre à jour
+                } else {
+                    showMessage('Erreur: ' + (data.message || 'Erreur inconnue'), 'danger');
+                }
+            })
+            .catch(error => {
+                console.error('Erreur:', error);
+                showMessage('Erreur lors de la mise à jour', 'danger');
+            });
+        }
+        
+        // Fonction pour supprimer un lot
+        function deleteLot(lotId) {
+            if (!confirm('Êtes-vous sûr de vouloir supprimer ce lot ?')) {
+                return;
+            }
+            
+            fetch(`${API_BASE}lots.php?id=${lotId}`, {
+                method: 'DELETE'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showMessage('Lot supprimé avec succès', 'success');
+                    loadAllLots(); // Recharger pour mettre à jour
+                } else {
+                    showMessage('Erreur: ' + (data.message || 'Erreur inconnue'), 'danger');
+                }
+            })
+            .catch(error => {
+                console.error('Erreur:', error);
+                showMessage('Erreur lors de la suppression', 'danger');
+            });
+        }
+        
+        // Fonction pour afficher les messages
+        function showMessage(message, type) {
+            const messagesDiv = document.getElementById('messages');
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type} alert-dismissible fade show`;
+            alertDiv.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            messagesDiv.appendChild(alertDiv);
+            
+            // Auto-supprimer après 5 secondes
+            setTimeout(() => {
+                if (alertDiv.parentNode) {
+                    alertDiv.remove();
+                }
+            }, 5000);
+        }
+    </script>
+</body>
+</html>

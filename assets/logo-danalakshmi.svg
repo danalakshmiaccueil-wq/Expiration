@@ -1,0 +1,23 @@
+<svg width="500" height="500" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Lotus petal top -->
+  <path d="M250 50L200 150C200 150 220 120 250 120C280 120 300 150 300 150L250 50Z" fill="#4a934a"/>
+  
+  <!-- Left lotus petal -->
+  <path d="M150 200C150 150 200 100 250 120C250 150 220 180 190 180C160 180 150 220 150 200Z" fill="#6cb56c"/>
+  
+  <!-- Right lotus petal -->
+  <path d="M350 200C350 150 300 100 250 120C250 150 280 180 310 180C340 180 350 220 350 200Z" fill="#52a852"/>
+  
+  <!-- Center stem -->
+  <path d="M240 120L250 250L260 120" fill="#4a934a"/>
+  
+  <!-- Pink wave bottom -->
+  <path d="M50 280C100 260 150 280 200 270C250 260 300 280 350 270C400 260 450 280 500 270L500 290C450 300 400 280 350 290C300 300 250 280 200 290C150 300 100 280 50 300Z" fill="#e91e63"/>
+  
+  <!-- Gold wave -->
+  <path d="M80 320C130 300 180 320 230 310C280 300 330 320 380 310C430 300 480 320 500 310L500 330C480 340 430 320 380 330C330 340 280 320 230 330C180 340 130 320 80 340Z" fill="#d4af37"/>
+  
+  <!-- Company name -->
+  <text x="250" y="380" font-family="serif" font-size="36" font-weight="bold" text-anchor="middle" fill="#8b1538">Danalakshmi</text>
+  <text x="250" y="410" font-family="serif" font-size="14" text-anchor="middle" fill="#6c757d">GROSSISTE DES GOÛTS DU MONDE</text>
+</svg>

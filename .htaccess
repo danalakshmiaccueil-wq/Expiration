@@ -1,0 +1,19 @@
+RewriteEngine On
+
+# Redirection pour health sans .php
+RewriteRule ^health$ health.php [L]
+
+# Redirection pour lots sans .php
+RewriteRule ^lots$ lots.php [L]
+
+# Redirection pour produits sans .php
+RewriteRule ^produits$ produits.php [L]
+
+# Headers CORS
+Header always set Access-Control-Allow-Origin "*"
+Header always set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
+Header always set Access-Control-Allow-Headers "Content-Type, Authorization"
+
+# Options de fichier
+Options -Indexes
+DirectoryIndex index.php

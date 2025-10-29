@@ -1,0 +1,246 @@
+:root {
+    /* Couleurs du logo Danalakshmi */
+    --primary-green: #4a934a;      /* Vert principal des feuilles */
+    --secondary-green: #6cb56c;     /* Vert secondaire */
+    --accent-green: #52a852;       /* Vert accent */
+    --accent-pink: #e91e63;        /* Rose/Magenta des vagues */
+    --accent-gold: #d4af37;        /* Or des vagues */
+    --brand-burgundy: #8b1538;     /* Bordeaux du texte Danalakshmi */
+    --text-gray: #6c757d;          /* Gris du sous-titre */
+    --dark-text: #2c3e50;
+    --light-bg: #f8f9fa;
+    --white: #ffffff;
+}
+
+body {
+    background: linear-gradient(135deg, var(--light-bg) 0%, #e8f5e8 100%);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--dark-text);
+}
+
+.navbar {
+    background: linear-gradient(135deg, var(--primary-green) 0%, var(--secondary-green) 100%);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand:hover {
+    transform: scale(1.02);
+    transition: transform 0.2s ease;
+}
+
+.logo {
+    width: 45px;
+    height: 45px;
+    object-fit: contain;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary-green) 0%, var(--secondary-green) 100%);
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-weight: 500;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, var(--accent-green) 0%, var(--primary-green) 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(74, 147, 74, 0.3);
+}
+
+.btn-outline-primary {
+    border-color: var(--primary-green);
+    color: var(--primary-green);
+    border-radius: 10px;
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--primary-green);
+    border-color: var(--primary-green);
+}
+
+.card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    margin-bottom: 2rem;
+}
+
+.form-control, .form-select {
+    border-radius: 10px;
+    border: 2px solid #e9ecef;
+    padding: 12px 15px;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--primary-green);
+    box-shadow: 0 0 0 0.2rem rgba(74, 147, 74, 0.25);
+}
+
+.table th {
+    background: var(--primary-green);
+    color: white;
+    border: none;
+    padding: 1rem;
+}
+
+.section-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: var(--dark-text);
+    display: flex;
+    align-items: center;
+}
+
+.section-title i {
+    margin-right: 0.5rem;
+    color: var(--primary-green);
+}
+
+/* Métriques avec couleurs du logo */
+.metric-card.expired {
+    border-left: 5px solid var(--accent-pink);
+    background: linear-gradient(135deg, #fdf2f8 0%, white 100%);
+}
+
+.metric-card.critical {
+    border-left: 5px solid var(--accent-gold);
+    background: linear-gradient(135deg, #fffbf0 0%, white 100%);
+}
+
+.metric-card.warning {
+    border-left: 5px solid #ffc107;
+    background: linear-gradient(135deg, #fffbf0 0%, white 100%);
+}
+
+.metric-card.attention {
+    border-left: 5px solid var(--secondary-green);
+    background: linear-gradient(135deg, #f0fff4 0%, white 100%);
+}
+
+.metric-card.good {
+    border-left: 5px solid var(--primary-green);
+    background: linear-gradient(135deg, #f0fff4 0%, white 100%);
+}
+
+.menu-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--primary-green);
+}
+
+.modal-header {
+    background: linear-gradient(135deg, var(--primary-green) 0%, var(--secondary-green) 100%);
+    color: white;
+    border-radius: 15px 15px 0 0;
+}
+
+.text-success {
+    color: var(--primary-green) !important;
+}
+
+.text-primary {
+    color: var(--brand-burgundy) !important;
+}
+
+.loading {
+    text-align: center;
+    padding: 2rem;
+    color: var(--primary-green);
+}
+
+.stats-number {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--primary-green);
+}
+
+.dashboard-header {
+    background: white;
+    border-radius: 15px;
+    padding: 2rem;
+    margin: 2rem 0;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    border-left: 5px solid var(--primary-green);
+}
+
+.content-header {
+    background: white;
+    border-radius: 15px;
+    padding: 2rem;
+    margin: 2rem 0;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    border-left: 5px solid var(--primary-green);
+}
+
+.metric-card {
+    background: white;
+    border-radius: 15px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: none;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.metric-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    color: inherit;
+    text-decoration: none;
+}
+
+.menu-card {
+    background: white;
+    border-radius: 15px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: none;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    text-align: center;
+}
+
+.menu-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+    color: inherit;
+    text-decoration: none;
+}
+
+.stats-card {
+    background: white;
+    border-radius: 15px;
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+@media (max-width: 768px) {
+    .dashboard-header {
+        padding: 1.5rem;
+        margin: 1rem 0;
+    }
+    
+    .content-header {
+        padding: 1.5rem;
+        margin: 1rem 0;
+    }
+    
+    .metric-number {
+        font-size: 2rem;
+    }
+    
+    .menu-icon {
+        font-size: 2rem;
+    }
+}

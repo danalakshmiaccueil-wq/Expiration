@@ -1,0 +1,10 @@
+# Ce fichier maintient le dossier cache/ dans Git
+# Les fichiers de cache sont générés dynamiquement par l'application
+#
+# Structure du cache:
+# - dashboard_*.cache : Cache des statistiques du dashboard
+# - lots_*.cache : Cache des données de lots
+# - alertes_*.cache : Cache des alertes
+#
+# Durée de vie: 5 minutes par défaut (configurable)
+# Permissions recommandées: 755 pour le dossier, 644 pour les fichiers

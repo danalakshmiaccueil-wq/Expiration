@@ -1,0 +1,201 @@
+# Configuration Apache pour l'API Gestion des Dates d'Expiration
+# Compatible avec cPanel et hébergement partagé
+# Version : 1.0
+# Date : 11 octobre 2025
+
+# === SÉCURITÉ ===
+
+# Empêcher l'accès direct aux fichiers sensibles
+<Files "config.php">
+    Order allow,deny
+    Deny from all
+</Files>
+
+<Files "database.php">
+    Order allow,deny
+    Deny from all
+</Files>
+
+<FilesMatch "\.(log|cache|tmp)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Empêcher l'accès aux répertoires sensibles
+<DirectoryMatch "^.*(logs|cache|tmp).*$">
+    Order allow,deny
+    Deny from all
+</DirectoryMatch>
+
+# === CORS ET HEADERS ===
+
+# Headers de sécurité
+<IfModule mod_headers.c>
+    # Prévention du clickjacking
+    Header always append X-Frame-Options SAMEORIGIN
+    
+    # Prévention du MIME type sniffing
+    Header always set X-Content-Type-Options nosniff
+    
+    # Protection XSS
+    Header always set X-XSS-Protection "1; mode=block"
+    
+    # Politique de référent
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    
+    # Headers CORS pour API
+    Header always set Access-Control-Allow-Origin "*"
+    Header always set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
+    Header always set Access-Control-Allow-Headers "Content-Type, Authorization, X-Requested-With"
+    Header always set Access-Control-Max-Age "3600"
+</IfModule>
+
+# === RÉÉCRITURE D'URL ===
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # Redirection HTTPS (si disponible)
+    # RewriteCond %{HTTPS} off
+    # RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+    
+    # API Routes - Endpoints principaux
+    RewriteRule ^api/produits/?$ endpoints/produits.php [L,QSA]
+    RewriteRule ^api/lots/?$ endpoints/lots.php [L,QSA]
+    RewriteRule ^api/dashboard/?$ endpoints/dashboard.php [L,QSA]
+    RewriteRule ^api/parametres/?$ endpoints/parametres.php [L,QSA]
+    RewriteRule ^api/alertes/?$ endpoints/alertes.php [L,QSA]
+    
+    # Routes avec ID
+    RewriteRule ^api/produits/([0-9]+)/?$ endpoints/produits.php?id=$1 [L,QSA]
+    RewriteRule ^api/lots/([0-9]+)/?$ endpoints/lots.php?id=$1 [L,QSA]
+    RewriteRule ^api/parametres/([0-9]+)/?$ endpoints/parametres.php?id=$1 [L,QSA]
+    
+    # Actions spéciales
+    RewriteRule ^api/lots/([0-9]+)/solde/?$ endpoints/lots.php?id=$1&action=marquer_solde [L,QSA]
+    RewriteRule ^api/dashboard/export/?$ endpoints/dashboard.php?action=export [L,QSA]
+    
+    # Page de test
+    RewriteRule ^api/test/?$ test.php [L]
+    
+    # Health check
+    RewriteRule ^api/health/?$ test.php?health=1 [L]
+</IfModule>
+
+# === COMPRESSION ===
+
+# Compression Gzip
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/plain
+    AddOutputFilterByType DEFLATE text/html
+    AddOutputFilterByType DEFLATE text/xml
+    AddOutputFilterByType DEFLATE text/css
+    AddOutputFilterByType DEFLATE application/xml
+    AddOutputFilterByType DEFLATE application/xhtml+xml
+    AddOutputFilterByType DEFLATE application/rss+xml
+    AddOutputFilterByType DEFLATE application/javascript
+    AddOutputFilterByType DEFLATE application/x-javascript
+    AddOutputFilterByType DEFLATE application/json
+</IfModule>
+
+# === CACHE ===
+
+# Cache des fichiers statiques
+<IfModule mod_expires.c>
+    ExpiresActive On
+    
+    # Cache court pour l'API (1 minute)
+    ExpiresByType application/json "access plus 1 minute"
+    
+    # Cache pour les assets
+    ExpiresByType text/css "access plus 1 week"
+    ExpiresByType application/javascript "access plus 1 week"
+    ExpiresByType image/png "access plus 1 month"
+    ExpiresByType image/jpg "access plus 1 month"
+    ExpiresByType image/jpeg "access plus 1 month"
+    ExpiresByType image/gif "access plus 1 month"
+    ExpiresByType image/ico "access plus 1 month"
+    ExpiresByType image/x-icon "access plus 1 month"
+</IfModule>
+
+# Cache-Control headers
+<IfModule mod_headers.c>
+    # API responses - pas de cache
+    <FilesMatch "\.(php)$">
+        Header set Cache-Control "no-cache, no-store, must-revalidate"
+        Header set Pragma "no-cache"
+        Header set Expires 0
+    </FilesMatch>
+</IfModule>
+
+# === OPTIMISATIONS ===
+
+# Désactiver l'affichage des répertoires
+Options -Indexes
+
+# Désactiver les signatures du serveur (si autorisé)
+ServerSignature Off
+
+# Limite de taille des uploads (pour les imports de données)
+<IfModule mod_php.c>
+    php_value upload_max_filesize 10M
+    php_value post_max_size 10M
+    php_value max_execution_time 60
+    php_value memory_limit 128M
+</IfModule>
+
+# === GESTION D'ERREURS ===
+
+# Pages d'erreur personnalisées (optionnel)
+# ErrorDocument 404 /api/error.php?code=404
+# ErrorDocument 500 /api/error.php?code=500
+
+# === TYPES MIME ===
+
+<IfModule mod_mime.c>
+    AddType application/json .json
+    AddType application/javascript .js
+    AddCharset utf-8 .html .css .js .json .xml .txt
+</IfModule>
+
+# === RÈGLES SPÉCIFIQUES cPanel ===
+
+# Protection contre les attaches directes (hotlinking)
+<IfModule mod_rewrite.c>
+    # RewriteCond %{HTTP_REFERER} !^$
+    # RewriteCond %{HTTP_REFERER} !^http(s)?://(www\.)?votre-domaine\.com [NC]
+    # RewriteRule \.(jpg|jpeg|png|gif)$ - [F]
+</IfModule>
+
+# Limitation du taux de requêtes (si mod_evasive est disponible)
+<IfModule mod_evasive24.c>
+    DOSHashTableSize    2048
+    DOSPageCount        10
+    DOSPageInterval     1
+    DOSSiteCount        50
+    DOSSiteInterval     1
+    DOSBlockingPeriod   60
+</IfModule>
+
+# === INSTRUCTIONS POUR cPanel ===
+
+# DEPLOYMENT INSTRUCTIONS:
+# 1. Télécharger tous les fichiers dans public_html/api/
+# 2. Vérifier que les permissions sont correctes (755 pour dossiers, 644 pour fichiers)
+# 3. Créer les dossiers logs/ et cache/ avec permissions 755
+# 4. Configurer la base de données dans config/database.php
+# 5. Tester avec: votre-domaine.com/api/test
+# 6. Activer SSL si disponible (décommenter les lignes HTTPS)
+
+# PERMISSIONS RECOMMANDÉES:
+# Dossiers: 755 (rwxr-xr-x)
+# Fichiers PHP: 644 (rw-r--r--)
+# Fichiers config: 600 (rw-------)
+# Dossiers logs/cache: 755 avec fichiers 644
+
+# VARIABLES D'ENVIRONNEMENT (à configurer dans cPanel si supporté):
+# DB_HOST=localhost
+# DB_NAME=nom_base_donnees
+# DB_USER=utilisateur_db
+# DB_PASS=mot_de_passe_db
+# ENVIRONMENT=production

@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Archives - Produits Soldés - Danalakshmi</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/danalakshmi-theme.css">
+    <style>
+        /* NOUVEAU HEADER MODERNE */
+        .modern-navbar {
+            background: #ffffff;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+            padding: 1rem 0;
+            border-bottom: 3px solid #4a934a;
+        }
+        
+        .modern-navbar .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #2c3e50 !important;
+        }
+        
+        .modern-navbar .navbar-brand span {
+            background: linear-gradient(135deg, #4a934a 0%, #6cb56c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .modern-navbar .nav-link {
+            color: #2c3e50;
+            font-weight: 500;
+            padding: 0.5rem 1.2rem;
+            margin: 0 0.2rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .modern-navbar .nav-link:hover {
+            background: rgba(74, 147, 74, 0.1);
+            color: #4a934a;
+            transform: translateY(-2px);
+        }
+        
+        .modern-navbar .nav-link.active {
+            background: linear-gradient(135deg, #4a934a 0%, #6cb56c 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(74, 147, 74, 0.3);
+        }
+        
+        .modern-navbar .nav-link i {
+            margin-right: 0.5rem;
+        }
+        
+        .logo {
+            width: 50px;
+            height: 50px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+        }
+
+        body {
+            background-color: #f8f9fa;
+        }
+        
+        .main-container {
+            margin-top: 20px;
+        }
+        
+        .lot-card {
+            transition: transform 0.2s;
+            opacity: 0.8;
+        }
+        
+        .lot-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            opacity: 1;
+        }
+        
+        .sold {
+            border-left: 4px solid #6c757d;
+            background-color: #f8f9fa;
+        }
+        
+        .search-container {
+            position: relative;
+        }
+        
+        .stats-card {
+            background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+            color: white;
+        }
+        
+        .archive-header {
+            background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Moderne -->
+    <nav class="navbar navbar-expand-lg modern-navbar">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <img src="logo danalakshmi.png" class="logo me-3" alt="Danalakshmi Logo">
+                <span>Danalakshmi Store</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">
+                            <i class="fas fa-home"></i>Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="add-date.html">
+                            <i class="fas fa-plus-circle"></i>Ajouter Date
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="produits-dates.html">
+                            <i class="fas fa-calendar-check"></i>Voir Dates
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="gestion-produits.html">
+                            <i class="fas fa-box-open"></i>Produits
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="archives.html">
+                            <i class="fas fa-archive"></i>Archives
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container main-container">
+        <div class="row">
+            <div class="col-12">
+                <div class="bg-white rounded border p-4 mb-4">
+                    <div class="archive-header rounded p-3 mb-4 text-center">
+                        <h3 class="mb-2">
+                            <i class="fas fa-archive"></i> Archives - Produits Soldés
+                        </h3>
+                        <p class="mb-0 opacity-75">Historique des lots marqués comme soldés</p>
+                    </div>
+                    
+                    <!-- Statistiques -->
+                    <div class="row mb-4">
+                        <div class="col-md-4 offset-md-2">
+                            <div class="stats-card rounded p-3 text-center">
+                                <h4 class="mb-1" id="total-sold">-</h4>
+                                <small>Total Soldés</small>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="bg-info rounded p-3 text-center text-white">
+                                <h4 class="mb-1" id="sold-this-month">-</h4>
+                                <small>Ce Mois-ci</small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Recherche -->
+                    <div class="row mb-4">
+                        <div class="col-md-6 offset-md-3">
+                            <div class="search-container">
+                                <input type="text" id="search-input" class="form-control" placeholder="Rechercher dans les archives...">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Messages -->
+                    <div id="messages"></div>
+                    
+                    <!-- Loading -->
+                    <div id="loading" class="text-center py-4">
+                        <i class="fas fa-spinner fa-spin fa-2x"></i>
+                        <p>Chargement des archives...</p>
+                    </div>
+                    
+                    <!-- Liste des lots soldés -->
+                    <div id="lots-container" class="row" style="display: none;">
+                        <!-- Les lots seront chargés ici -->
+                    </div>
+                    
+                    <!-- Pas de résultats -->
+                    <div id="no-results" style="display: none;" class="text-center py-4">
+                        <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
+                        <h5 class="text-muted">Aucune archive trouvée</h5>
+                        <p class="text-muted">Il n'y a pas de produits soldés correspondant à vos critères de recherche.</p>
+                    </div>
+                    
+                    <!-- Navigation -->
+                    <div class="text-center mt-4">
+                        <a href="produits-dates.html" class="btn btn-primary me-2">
+                            <i class="fas fa-arrow-left"></i> Retour aux Produits Actifs
+                        </a>
+                        <a href="add-date.html" class="btn btn-outline-primary">
+                            <i class="fas fa-plus"></i> Ajouter une Date
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        const API_BASE = 'api/';
+        let allSoldLots = [];
+        let filteredLots = [];
+        
+        // Charger tous les lots soldés au démarrage
+        document.addEventListener('DOMContentLoaded', function() {
+            loadSoldLots();
+            
+            // Recherche en temps réel
+            document.getElementById('search-input').addEventListener('keyup', function() {
+                filterAndDisplayLots();
+            });
+        });
+        
+        // Fonction pour charger tous les lots soldés
+        function loadSoldLots() {
+            fetch(`${API_BASE}lots.php`)
+                .then(response => response.json())
+                .then(data => {
+                    // L'API retourne {success: true, data: [...]}
+                    const allLotsFromApi = data.success ? data.data : [];
+                    // Filtrer seulement les lots soldés
+                    allSoldLots = allLotsFromApi.filter(lot => lot.date_solde);
+                    calculateStats();
+                    filterAndDisplayLots();
+                    document.getElementById('loading').style.display = 'none';
+                    document.getElementById('lots-container').style.display = 'block';
+                })
+                .catch(error => {
+                    console.error('Erreur lors du chargement:', error);
+                    showMessage('Erreur lors du chargement des archives', 'danger');
+                    document.getElementById('loading').style.display = 'none';
+                });
+        }
+        
+        // Fonction pour calculer les statistiques
+        function calculateStats() {
+            const total = allSoldLots.length;
+            const currentMonth = new Date().getMonth();
+            const currentYear = new Date().getFullYear();
+            
+            const thisMonth = allSoldLots.filter(lot => {
+                const soldDate = new Date(lot.date_solde);
+                return soldDate.getMonth() === currentMonth && soldDate.getFullYear() === currentYear;
+            }).length;
+            
+            document.getElementById('total-sold').textContent = total;
+            document.getElementById('sold-this-month').textContent = thisMonth;
+        }
+        
+        // Fonction pour filtrer et afficher les lots
+        function filterAndDisplayLots() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            
+            filteredLots = allSoldLots.filter(lot => {
+                // Filtre par recherche
+                return !searchTerm || 
+                    lot.produit_nom.toLowerCase().includes(searchTerm) ||
+                    lot.numero_lot.toLowerCase().includes(searchTerm);
+            });
+            
+            displayLots();
+        }
+        
+        // Fonction pour afficher les lots
+        function displayLots() {
+            const container = document.getElementById('lots-container');
+            const noResults = document.getElementById('no-results');
+            
+            if (filteredLots.length === 0) {
+                container.style.display = 'none';
+                noResults.style.display = 'block';
+                return;
+            }
+            
+            container.style.display = 'block';
+            noResults.style.display = 'none';
+            
+            const lotsHTML = filteredLots.map(lot => {
+                const expDate = new Date(lot.date_expiration);
+                const soldDate = new Date(lot.date_solde);
+                
+                return `
+                    <div class="col-md-6 mb-3">
+                        <div class="card lot-card sold h-100">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <h6 class="card-title mb-1">${lot.produit_nom}</h6>
+                                    <span class="badge bg-secondary">
+                                        <i class="fas fa-tag"></i> SOLDÉ
+                                    </span>
+                                </div>
+                                
+                                <div class="row text-sm">
+                                    <div class="col-6">
+                                        <small class="text-muted">Lot:</small><br>
+                                        <strong>${lot.numero_lot}</strong>
+                                    </div>
+                                    <div class="col-6">
+                                        <small class="text-muted">Quantité:</small><br>
+                                        <strong>${lot.quantite_actuelle}/${lot.quantite_initiale}</strong>
+                                    </div>
+                                </div>
+                                
+                                <hr class="my-2">
+                                
+                                <div class="row text-sm">
+                                    <div class="col-6">
+                                        <small class="text-muted">Expirait le:</small><br>
+                                        <strong>${expDate.toLocaleDateString('fr-FR')}</strong>
+                                    </div>
+                                    <div class="col-6">
+                                        <small class="text-muted">Soldé le:</small><br>
+                                        <strong class="text-success">${soldDate.toLocaleDateString('fr-FR')}</strong>
+                                    </div>
+                                </div>
+                                
+                                <div class="row text-sm mt-2">
+                                    <div class="col-12">
+                                        <small class="text-muted">Date d'ajout:</small><br>
+                                        <strong class="text-success">
+                                            <i class="fas fa-calendar-plus"></i> 
+                                            ${lot.date_fabrication ? new Date(lot.date_fabrication).toLocaleDateString('fr-FR') : 'Non renseignée'}
+                                        </strong>
+                                    </div>
+                                </div>
+                                
+                                ${lot.lieu_stockage ? `
+                                    <div class="mt-2">
+                                        <small class="text-muted">Emplacement:</small><br>
+                                        <small class="text-muted">${lot.lieu_stockage}</small>
+                                    </div>
+                                ` : ''}
+                                
+                                <div class="mt-3 text-end">
+                                    <button class="btn btn-sm btn-outline-danger" onclick="permanentlyDelete(${lot.id})" title="Supprimer définitivement">
+                                        <i class="fas fa-trash"></i> Supprimer
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            container.innerHTML = lotsHTML;
+        }
+        
+        // Fonction pour supprimer définitivement un lot
+        function permanentlyDelete(lotId) {
+            if (!confirm('Êtes-vous sûr de vouloir supprimer définitivement ce lot des archives ?\\nCette action est irréversible !')) {
+                return;
+            }
+            
+            fetch(`${API_BASE}lots.php?id=${lotId}`, {
+                method: 'DELETE'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showMessage('Lot supprimé définitivement des archives', 'success');
+                    loadSoldLots(); // Recharger pour mettre à jour
+                } else {
+                    showMessage('Erreur: ' + (data.message || 'Erreur inconnue'), 'danger');
+                }
+            })
+            .catch(error => {
+                console.error('Erreur:', error);
+                showMessage('Erreur lors de la suppression', 'danger');
+            });
+        }
+        
+        // Fonction pour afficher les messages
+        function showMessage(message, type) {
+            const messagesDiv = document.getElementById('messages');
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type} alert-dismissible fade show`;
+            alertDiv.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            messagesDiv.appendChild(alertDiv);
+            
+            // Auto-supprimer après 5 secondes
+            setTimeout(() => {
+                if (alertDiv.parentNode) {
+                    alertDiv.remove();
+                }
+            }, 5000);
+        }
+    </script>
+</body>
+</html>

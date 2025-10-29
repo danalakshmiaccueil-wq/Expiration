@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Danalakshmi Store</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/danalakshmi-theme.css">
+    <style>
+        /* NOUVEAU HEADER MODERNE */
+        .modern-navbar {
+            background: #ffffff;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+            padding: 1rem 0;
+            border-bottom: 3px solid #4a934a;
+        }
+        
+        .modern-navbar .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #2c3e50 !important;
+        }
+        
+        .modern-navbar .navbar-brand span {
+            background: linear-gradient(135deg, #4a934a 0%, #6cb56c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .modern-navbar .nav-link {
+            color: #2c3e50;
+            font-weight: 500;
+            padding: 0.5rem 1.2rem;
+            margin: 0 0.2rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .modern-navbar .nav-link:hover {
+            background: rgba(74, 147, 74, 0.1);
+            color: #4a934a;
+            transform: translateY(-2px);
+        }
+        
+        .modern-navbar .nav-link.active {
+            background: linear-gradient(135deg, #4a934a 0%, #6cb56c 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(74, 147, 74, 0.3);
+        }
+        
+        .modern-navbar .nav-link i {
+            margin-right: 0.5rem;
+        }
+        
+        .logo {
+            width: 50px;
+            height: 50px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+        }
+
+        .metric-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-label {
+            font-size: 1rem;
+            font-weight: 500;
+            opacity: 0.8;
+        }
+
+        .metric-icon {
+            font-size: 2rem;
+            opacity: 0.6;
+            float: right;
+        }
+
+        .menu-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .menu-desc {
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Moderne -->
+    <nav class="navbar navbar-expand-lg modern-navbar">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <img src="logo danalakshmi.png" class="logo me-3" alt="Danalakshmi Logo">
+                <span>Danalakshmi Store</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="index.html">
+                            <i class="fas fa-home"></i>Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="add-date.html">
+                            <i class="fas fa-plus-circle"></i>Ajouter Date
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="produits-dates.html">
+                            <i class="fas fa-calendar-check"></i>Voir Dates
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="gestion-produits.html">
+                            <i class="fas fa-box-open"></i>Produits
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Header Dashboard -->
+        <div class="dashboard-header">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1 class="mb-2">
+                        <i class="fas fa-chart-line text-success"></i>
+                        Dashboard de Gestion
+                    </h1>
+                    <p class="mb-0 text-muted">Vue d'ensemble des dates d'expiration et métriques de stock</p>
+                </div>
+                <div class="col-md-4 text-end">
+                    <div class="text-muted">
+                        <i class="fas fa-calendar-alt"></i> 
+                        <span id="current-date"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Métriques principales -->
+        <div class="section-title">
+            <i class="fas fa-tachometer-alt"></i>
+            Métriques d'Expiration
+        </div>
+
+        <div id="metrics-loading" class="loading">
+            <i class="fas fa-spinner fa-spin fa-2x"></i>
+            <p class="mt-2">Chargement des métriques...</p>
+        </div>
+
+        <div id="metrics-container" class="row" style="display: none;">
+            <div class="col-lg-2 col-md-4 col-sm-6">
+                <a href="produits-dates.html?filter=expired" class="metric-card expired">
+                    <div class="metric-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="metric-number text-danger" id="expired-count">0</div>
+                    <div class="metric-label">Expirés</div>
+                </a>
+            </div>
+            <div class="col-lg-2 col-md-4 col-sm-6">
+                <a href="produits-dates.html?filter=critical" class="metric-card critical">
+                    <div class="metric-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="metric-number text-warning" id="critical-count">0</div>
+                    <div class="metric-label">< 7 jours</div>
+                </a>
+            </div>
+            <div class="col-lg-2 col-md-4 col-sm-6">
+                <a href="produits-dates.html?filter=warning" class="metric-card warning">
+                    <div class="metric-icon">
+                        <i class="fas fa-calendar-week"></i>
+                    </div>
+                    <div class="metric-number text-info" id="warning-count">0</div>
+                    <div class="metric-label">< 2 semaines</div>
+                </a>
+            </div>
+            <div class="col-lg-2 col-md-4 col-sm-6">
+                <a href="produits-dates.html?filter=attention" class="metric-card attention">
+                    <div class="metric-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <div class="metric-number text-primary" id="attention-count">0</div>
+                    <div class="metric-label">< 1 mois</div>
+                </a>
+            </div>
+            <div class="col-lg-2 col-md-4 col-sm-6">
+                <a href="produits-dates.html?filter=good" class="metric-card good">
+                    <div class="metric-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <div class="metric-number text-success" id="good-count">0</div>
+                    <div class="metric-label">< 3 mois</div>
+                </a>
+            </div>
+            <div class="col-lg-2 col-md-4 col-sm-6">
+                <a href="produits-dates.html" class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-boxes"></i>
+                    </div>
+                    <div class="metric-number text-secondary" id="total-count">0</div>
+                    <div class="metric-label">Total Lots</div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Menu principal -->
+        <div class="section-title mt-5">
+            <i class="fas fa-bars"></i>
+            Actions Rapides
+        </div>
+
+        <div class="row">
+            <div class="col-lg-3 col-md-6">
+                <a href="add-date.html" class="menu-card">
+                    <div class="menu-icon">
+                        <i class="fas fa-plus-circle"></i>
+                    </div>
+                    <div class="menu-title">Ajouter Date</div>
+                    <div class="menu-desc">Ajouter une nouvelle date d'expiration</div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <a href="produits-dates.html" class="menu-card">
+                    <div class="menu-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <div class="menu-title">Voir Dates Produits</div>
+                    <div class="menu-desc">Consulter et gérer les dates d'expiration</div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <a href="gestion-produits.html" class="menu-card">
+                    <div class="menu-icon">
+                        <i class="fas fa-box-open"></i>
+                    </div>
+                    <div class="menu-title">Gestion Produits</div>
+                    <div class="menu-desc">Ajouter et modifier les produits</div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <a href="archives.html" class="menu-card">
+                    <div class="menu-icon">
+                        <i class="fas fa-archive"></i>
+                    </div>
+                    <div class="menu-title">Archives</div>
+                    <div class="menu-desc">Consulter l'historique des produits soldés</div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Afficher la date actuelle
+        document.addEventListener('DOMContentLoaded', function() {
+            const now = new Date();
+            const options = { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                weekday: 'long'
+            };
+            document.getElementById('current-date').textContent = now.toLocaleDateString('fr-FR', options);
+            
+            loadMetrics();
+        });
+
+        function loadMetrics() {
+            fetch('api/lots.php')
+                .then(response => response.json())
+                .then(data => {
+                    const lots = data.success ? data.data : [];
+                    const activeLots = lots.filter(lot => !lot.date_solde);
+                    
+                    const now = new Date();
+                    const metrics = {
+                        expired: 0,
+                        critical: 0,  // < 7 jours
+                        warning: 0,   // < 2 semaines (14 jours)
+                        attention: 0, // < 1 mois (30 jours)
+                        good: 0,      // < 3 mois (90 jours)
+                        total: activeLots.length
+                    };
+
+                    activeLots.forEach(lot => {
+                        const expDate = new Date(lot.date_expiration);
+                        const diffDays = Math.ceil((expDate - now) / (1000 * 60 * 60 * 24));
+
+                        if (diffDays < 0) {
+                            metrics.expired++;
+                        } else if (diffDays < 7) {
+                            metrics.critical++;
+                        } else if (diffDays < 14) {
+                            metrics.warning++;
+                        } else if (diffDays < 30) {
+                            metrics.attention++;
+                        } else if (diffDays < 90) {
+                            metrics.good++;
+                        }
+                    });
+
+                    // Mettre à jour l'affichage
+                    document.getElementById('expired-count').textContent = metrics.expired;
+                    document.getElementById('critical-count').textContent = metrics.critical;
+                    document.getElementById('warning-count').textContent = metrics.warning;
+                    document.getElementById('attention-count').textContent = metrics.attention;
+                    document.getElementById('good-count').textContent = metrics.good;
+                    document.getElementById('total-count').textContent = metrics.total;
+
+                    // Afficher les métriques
+                    document.getElementById('metrics-loading').style.display = 'none';
+                    document.getElementById('metrics-container').style.display = 'flex';
+                })
+                .catch(error => {
+                    console.error('Erreur lors du chargement des métriques:', error);
+                    document.getElementById('metrics-loading').innerHTML = `
+                        <i class="fas fa-exclamation-triangle text-danger"></i>
+                        <p class="mt-2 text-danger">Erreur lors du chargement des métriques</p>
+                    `;
+                });
+        }
+    </script>
+</body>
+</html>
