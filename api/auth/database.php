@@ -6,8 +6,8 @@
 function getDBConnection() {
     $host = 'localhost';
     $dbname = 'sc3bera6697_danalakshmi_expiration';
-    $username = 'sc3bera6697_user_exp';
-    $password = 'ExpDate2024!Secure';
+    $username = 'sc3bera6697_danalakshmi_user';
+    $password = '0617443516Et?';
     
     try {
         $dsn = "mysql:host=$host;dbname=$dbname;charset=utf8mb4";
