@@ -102,8 +102,9 @@ function handleGet($pdo) {
     
     // Recherche par nom de produit ou numéro de lot
     if (!empty($search)) {
-        $where_conditions[] = "(p.nom LIKE :search OR l.numero_lot LIKE :search)";
-        $params[':search'] = "%$search%";
+        $where_conditions[] = "(p.nom LIKE :search1 OR l.numero_lot LIKE :search2)";
+        $params[':search1'] = "%$search%";
+        $params[':search2'] = "%$search%";
     }
     
     // Filtrage par statut d'expiration
@@ -135,7 +136,7 @@ function handleGet($pdo) {
     $where_clause = empty($where_conditions) ? '' : 'WHERE ' . implode(' AND ', $where_conditions);
     
     // Requête principale
-    $sql = "SELECT l.*, p.nom as produit_nom
+    $sql = "SELECT l.*, p.nom as produit_nom, p.code_barre as produit_reference
             FROM lots l 
             LEFT JOIN produits p ON l.produit_id = p.id 
             $where_clause

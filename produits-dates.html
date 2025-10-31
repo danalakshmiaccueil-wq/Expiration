@@ -280,9 +280,10 @@
         
         // Fonction pour charger tous les lots
         function loadAllLots() {
-            fetch(`${API_BASE}lots.php`)
+            fetch(`${API_BASE}lots.php?limit=1000`)
                 .then(response => response.json())
                 .then(data => {
+                    console.log('Lots chargés:', data);
                     // L'API retourne {success: true, data: [...]}
                     const allLotsFromApi = data.success ? data.data : [];
                     // Exclure les lots soldés de cette page
@@ -343,7 +344,7 @@
                 // Filtre par recherche
                 const matchesSearch = !searchTerm || 
                     lot.produit_nom.toLowerCase().includes(searchTerm) ||
-                    lot.produit_reference.toLowerCase().includes(searchTerm);
+                    (lot.produit_reference && lot.produit_reference.toLowerCase().includes(searchTerm));
                 
                 if (!matchesSearch) return false;
                 

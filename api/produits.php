@@ -37,7 +37,7 @@ try {
                 // Si pagination demandée explicitement
                 if (isset($_GET["page"]) || isset($_GET["limit"])) {
                     $page = isset($_GET["page"]) ? max(1, intval($_GET["page"])) : 1;
-                    $limit = isset($_GET["limit"]) ? min(200, max(10, intval($_GET["limit"]))) : 50;
+                    $limit = isset($_GET["limit"]) ? min(200, max(1, intval($_GET["limit"]))) : 50;
                     $offset = ($page - 1) * $limit;
                 } else {
                     $offset = 0;
